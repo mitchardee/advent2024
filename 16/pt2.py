@@ -3,8 +3,8 @@ from heapq import *
 from math import inf
 
 
-lines = [x.strip() for x in open("testInput.txt").readlines()]
-# lines = [x.strip() for x in open("input.txt").readlines()]
+# lines = [x.strip() for x in open("testInput.txt").readlines()]
+lines = [x.strip() for x in open("input.txt").readlines()]
 
 dirs = ((0,1), (-1,0), (0,-1), (1,0))
 
@@ -25,15 +25,14 @@ while h[0][0] <= bestScore:
     if drc not in visited:
         visited[drc] = s
         bestScorePath[drc].add((r,c))
-        
-
-    if visited[drc] == s:
-        bestScorePath[drc] |= bestScorePath[prev]
         nr, nc = r + dirs[d][0], c + dirs[d][1]
         if lines[nr][nc] != '#':
             heappush(h, (s+1, d, nr, nc, drc))
         heappush(h, (s + 1000, (d+1)%4, r, c, drc))
         heappush(h, (s + 1000, (d-1)%4, r, c, drc))
+
+    if visited[drc] == s:
+        bestScorePath[drc] |= bestScorePath[prev]
         
 
 pathSpots = set()
